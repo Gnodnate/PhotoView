@@ -85,16 +85,22 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [[UITableViewCell alloc] init];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     ALAssetsGroup *group = [self.arrayGroup objectAtIndex:[indexPath row]];
     [group setAssetsFilter:[ALAssetsFilter allPhotos]];
     NSInteger count = [group numberOfAssets];
     [cell.textLabel setText:[NSString stringWithFormat:@"%@ (%ld)", [group valueForProperty:ALAssetsGroupPropertyName], (long)count]];
-    UIImageView *imageView = [[UIImageView alloc] init];
-    [imageView setImage:[UIImage imageWithCGImage:[group posterImage]]];
-    [cell addSubview:imageView];
+    [cell.imageView  setImage:[UIImage imageWithCGImage:[group posterImage]]];
+
     return cell;
 }
 
+#pragma mark segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqual: @"showAlbum"]) {
+    }
+}
 
 @end
